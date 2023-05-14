@@ -1,0 +1,117 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <time.h>
+#include <string.h>
+#include <signal.h>
+
+// Erzeugung von Prozessen
+
+int main()
+{
+    int childproc_conv = fork();
+    // Hier ist der Kindprozess conv!
+    if (childproc_conv == 0)
+    {
+        printf("Conv: PID: %i\n", getpid());
+
+        // Endlosschleife
+        //  char c;
+        // c = getchar();
+        //  while (1) {
+        // if (c == 'c') {
+        //     printf("Programm wurde unterbrochen.");
+        //     break;
+        // }
+        //  printf("Du hast die Taste '%c' gedrückt.\n", c);
+        void INThandler(int);
+
+        int main(void) {
+            signal(SIGINT, INThandler);
+            while (1)
+                pause();
+            return 0;
+        }
+
+        void INThandler(int sig)
+        {
+            char c;
+
+            signal(sig, SIG_IGN);
+            printf("OUCH, did you hit Ctrl-C?\n"
+                   "Do you really want to quit? [y/n] ");
+            c = getchar();
+            if (c == 'y' || c == 'Y')
+                exit(0);
+            else
+                signal(SIGINT, INThandler);
+            getchar();
+        }
+
+        // 5 Zufallszahlen zw. 0 und 99
+        int i, r;
+        srand(time(NULL));
+        printf("Zufallszahlen: ");
+        int zufallszahlen[10];
+
+        char c1;
+
+        while (scanf("%c", c1) != 'c')
+        {
+
+            printf("%d ", zufallszahlen[i] = rand() % 100);
+        }
+        printf("\n");
+
+        int childproc_stat = fork();
+        // Hier ist der Kindprozess stat!
+        if (childproc_stat == 0)
+        {
+            printf("Stat: PID: %i\n", getpid());
+            // Summe der Zufallszahlen
+            int i, zufallszahlen[i];
+            float summe = 0, mittelwert;
+            for (i = 0; i < 10; i++)
+            {
+                summe += zufallszahlen[i];
+            }
+            // Mittelwert der ZUfallszahlen
+            mittelwert = summe / 10;
+
+            int childproc_log = fork();
+            // Hier ist der Kindprozess log!
+            if (childproc_log == 0)
+            {
+                printf("Log: PID: %i\n", getpid());
+                // Ergebnissse in einer lokalen Datei einschreiben
+                FILE *lokal_file;
+                lokal_file = fopen("log", "w");
+                if (lokal_file == 0)
+                { // Prüft, ob Datei erfolgreich geöffnet wurde
+
+                    printf("Fehler beim Öffnen der Datei. \n");
+                    exit(1);
+                }
+                for (i = 0; i < 10; i++)
+                {
+                    fprintf(lokal_file, " %d\n", zufallszahlen[i]); // Schreibt in Datei ein
+                }
+                fclose(lokal_file); // Datei schließen
+            }
+
+            int childproc_report = fork();
+            if (childproc_report == 0)
+            { // Hier ist der Kindprozess report!
+
+                printf("Report: PID: %i\n", getpid());
+                // Ausgabe Shell:
+                printf("\n");
+                printf("Summe der Zufallszahlen: %.2f\n", summe);
+                printf("Mittelwert der Zufallszahlen: %.2f\n", mittelwert);
+            }
+
+            printf("\n");
+            return 0;
+        }
+    }
+}
