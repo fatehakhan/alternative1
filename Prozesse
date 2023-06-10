@@ -12,9 +12,7 @@ int main()
     {
         printf("Conv: PID: %i\n", getpid());
         // Endlosschleife
-        
-        printf("Du hast die Taste '%c' gedrückt.\n", c); */
-
+       
         // 5 Zufallszahlen zw. 0 und 99
         int i, r;
         srand(time(NULL));
