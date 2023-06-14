@@ -1,0 +1,20 @@
+int main()
+{
+    int childproc_conv = fork();
+    if (childproc_conv == 0) // Hier ist der Kindprozess conv!
+    {
+        int childproc_stat = fork();
+        if (childproc_stat == 0)// Hier ist der Kindprozess stat!
+        {
+            int childproc_log = fork();
+            if (childproc_log == 0) // Hier ist der Kindprozess log!
+            {
+              int childproc_report = fork();
+              if (childproc_report == 0) // Hier ist der Kindprozess report!
+              {
+               }
+           }
+            return 0;
+        }
+    }
+}
